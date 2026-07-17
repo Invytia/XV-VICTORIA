@@ -88,6 +88,55 @@
             opacity: 1;
         }
 
+        /* Contenedor para Imágenes Estáticas de Océano */
+        #ocean-decorations {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1; 
+            overflow: hidden;
+        }
+
+        .ocean-img {
+            position: absolute;
+            opacity: 0;
+            filter: drop-shadow(0 0 15px rgba(0, 242, 254, 0.4));
+            animation: float-image 6s ease-in-out infinite alternate;
+            transition: opacity 1.5s ease-in 0.8s;
+        }
+
+        body.content-active .ocean-img {
+            opacity: 0.65; 
+        }
+
+        @keyframes float-image {
+            0% { margin-top: 0px; }
+            100% { margin-top: -30px; }
+        }
+
+        /* Distribución a lo largo de todo el scroll */
+        .dec-1 { top: 8%; left: -20px; width: 140px; animation-delay: 0s; transform: rotate(10deg); }
+        .dec-2 { top: 18%; right: -25px; width: 110px; animation-delay: 1s; transform: rotate(-15deg); }
+        .dec-3 { top: 28%; left: 10px; width: 100px; animation-delay: 2s; transform: rotate(5deg); }
+        .dec-4 { top: 40%; right: -15px; width: 150px; animation-delay: 0.5s; transform: rotate(-10deg); }
+        .dec-5 { top: 52%; left: -30px; width: 120px; animation-delay: 1.5s; transform: rotate(20deg); }
+        .dec-6 { top: 62%; right: 10px; width: 90px; animation-delay: 2.5s; transform: rotate(-5deg); }
+        .dec-7 { top: 75%; left: -10px; width: 140px; animation-delay: 0.2s; transform: rotate(15deg); }
+        .dec-8 { top: 85%; right: -20px; width: 110px; animation-delay: 1.2s; transform: rotate(-25deg); }
+        .dec-9 { top: 94%; left: 5px; width: 95px; animation-delay: 2.2s; transform: rotate(8deg); }
+
+        /* Ajuste responsivo de decoraciones */
+        @media (max-width: 450px) {
+            .ocean-img { transform: scale(0.75); }
+            .dec-1 { left: -30px; }
+            .dec-2 { right: -30px; }
+            .dec-4 { right: -40px; }
+            .dec-5 { left: -40px; }
+        }
+
         /* Animaciones de Entrada (Scroll Reveal) */
         .reveal {
             opacity: 0;
@@ -282,67 +331,17 @@
             transform: translateY(0);
         }
 
-        /* CONTENEDOR PARA IMÁGENES PNG (Abarca todo el alto del main) */
-        #ocean-decorations {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1; /* Detrás del marco, delante del fondo */
-            overflow: hidden;
-        }
-
-        .ocean-img {
-            position: absolute;
-            opacity: 0;
-            filter: drop-shadow(0 0 15px rgba(0, 242, 254, 0.4));
-            /* Usamos margin-top para animar y no sobrescribir el transform: rotate */
-            animation: float-image 6s ease-in-out infinite alternate;
-            transition: opacity 1.5s ease-in 0.8s;
-        }
-
-        body.content-active .ocean-img {
-            opacity: 0.65; /* Visibilidad alta y elegante */
-        }
-
-        @keyframes float-image {
-            0% { margin-top: 0px; }
-            100% { margin-top: -30px; }
-        }
-
-        /* Distribución a lo largo de todo el scroll */
-        .dec-1 { top: 8%; left: -20px; width: 140px; animation-delay: 0s; transform: rotate(10deg); }
-        .dec-2 { top: 18%; right: -25px; width: 110px; animation-delay: 1s; transform: rotate(-15deg); }
-        .dec-3 { top: 28%; left: 10px; width: 100px; animation-delay: 2s; transform: rotate(5deg); }
-        .dec-4 { top: 40%; right: -15px; width: 150px; animation-delay: 0.5s; transform: rotate(-10deg); }
-        .dec-5 { top: 52%; left: -30px; width: 120px; animation-delay: 1.5s; transform: rotate(20deg); }
-        .dec-6 { top: 62%; right: 10px; width: 90px; animation-delay: 2.5s; transform: rotate(-5deg); }
-        .dec-7 { top: 75%; left: -10px; width: 140px; animation-delay: 0.2s; transform: rotate(15deg); }
-        .dec-8 { top: 85%; right: -20px; width: 110px; animation-delay: 1.2s; transform: rotate(-25deg); }
-        .dec-9 { top: 94%; left: 5px; width: 95px; animation-delay: 2.2s; transform: rotate(8deg); }
-
-        /* Ajuste responsivo de decoraciones */
-        @media (max-width: 450px) {
-            .ocean-img { transform: scale(0.75); }
-            .dec-1 { left: -30px; }
-            .dec-2 { right: -30px; }
-            .dec-4 { right: -40px; }
-            .dec-5 { left: -40px; }
-        }
-
-        /* Marco Principal Flotante */
+        /* Marco Principal Flotante (Con Transparencia Ajustada) */
         .invitation-frame {
             max-width: 550px;
             width: 100%;
-            border: 1px solid rgba(212, 175, 55, 0.2);
+            border: 1px solid rgba(212, 175, 55, 0.3);
             padding: 60px 35px;
             text-align: center;
             position: relative;
-            background: rgba(3, 11, 23, 0.8); 
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), inset 0 0 30px rgba(0, 242, 254, 0.05);
-            backdrop-filter: blur(15px);
+            background: rgba(3, 11, 23, 0.3); /* Transparencia para mostrar el fondo */
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), inset 0 0 30px rgba(0, 242, 254, 0.1);
+            backdrop-filter: blur(8px); /* Reducido para permitir visión a los PNGs */
             margin-bottom: 40px;
             z-index: 3;
             border-radius: 12px;
@@ -435,8 +434,9 @@
             transform: translate(-50%, -50%);
             color: var(--main-primary);
             font-size: 14px;
-            background: var(--bg-dark);
+            background: rgba(3, 11, 23, 0.3); /* Transparente acorde al marco */
             padding: 0 10px;
+            border-radius: 50%;
             filter: drop-shadow(0 0 5px var(--ocean-cyan));
             animation: spin-slow 15s linear infinite;
         }
@@ -497,13 +497,13 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            background: rgba(8, 41, 79, 0.4);
-            border: 1px solid rgba(0, 242, 254, 0.2);
+            background: rgba(8, 41, 79, 0.2); /* Mayor transparencia */
+            border: 1px solid rgba(0, 242, 254, 0.3);
             border-radius: 8px;
             padding: 15px 10px;
             width: 75px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5), inset 0 0 15px rgba(0, 242, 254, 0.05);
-            backdrop-filter: blur(5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4), inset 0 0 15px rgba(0, 242, 254, 0.05);
+            backdrop-filter: blur(4px);
         }
 
         .countdown-number {
@@ -529,11 +529,12 @@
             width: 100%;
             max-width: 340px;
             margin: 0 auto 30px auto;
-            background: rgba(3, 11, 23, 0.8);
+            background: rgba(3, 11, 23, 0.35); /* Transparencia para fondo visible */
             padding: 25px 20px;
             border-radius: 12px;
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
         }
 
         .calendar-month {
@@ -589,7 +590,7 @@
         /* Botones Generales */
         .btn-gold {
             display: inline-block;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.2); /* Fondo sutil para que destaquen bordes y fondo */
             color: var(--main-primary);
             border: 1px solid var(--main-primary);
             padding: 16px 30px;
@@ -636,7 +637,7 @@
             height: 260px;
             margin-top: 25px;
             margin-bottom: 20px;
-            border: 1px solid rgba(0, 242, 254, 0.3);
+            border: 1px solid rgba(0, 242, 254, 0.4);
             border-radius: 6px;
             overflow: hidden;
             position: relative;
@@ -663,24 +664,25 @@
         .form-input {
             width: 100%;
             padding: 16px;
-            background: rgba(3, 11, 23, 0.9);
-            border: 1px solid rgba(212, 175, 55, 0.3);
+            background: rgba(3, 11, 23, 0.45); /* Más transparente */
+            border: 1px solid rgba(212, 175, 55, 0.4);
             color: var(--text-light);
             font-family: 'Raleway', sans-serif;
             font-size: 14px; 
             border-radius: 6px;
             outline: none;
             transition: all 0.3s;
+            backdrop-filter: blur(4px);
         }
 
         .form-input:focus {
             border-color: var(--ocean-cyan);
-            box-shadow: 0 0 12px rgba(0, 242, 254, 0.2);
-            background: rgba(8, 41, 79, 0.8);
+            box-shadow: 0 0 12px rgba(0, 242, 254, 0.3);
+            background: rgba(8, 41, 79, 0.5);
         }
 
         .form-input::placeholder {
-            color: rgba(176, 196, 222, 0.5);
+            color: rgba(176, 196, 222, 0.6);
         }
         
         select.form-input option {
@@ -696,16 +698,17 @@
 
         /* Ticket Digital Pase VIP */
         .digital-ticket {
-            background: linear-gradient(135deg, #08294f 0%, #020b16 100%);
+            background: linear-gradient(135deg, rgba(8, 41, 79, 0.65) 0%, rgba(2, 11, 22, 0.65) 100%);
             border: 1px solid var(--ocean-cyan);
             border-radius: 12px;
             padding: 40px 20px;
             text-align: center;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.9), inset 0 0 20px rgba(0, 242, 254, 0.1);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6), inset 0 0 20px rgba(0, 242, 254, 0.1);
             margin: 0 auto;
             max-width: 320px;
+            backdrop-filter: blur(5px);
             animation: fadeInTicket 0.8s ease-out forwards;
         }
 
@@ -714,7 +717,7 @@
             position: absolute;
             width: 40px;
             height: 40px;
-            background: #030b17; 
+            background: rgba(3, 11, 23, 0.5); 
             border-radius: 50%;
             top: 50%;
             transform: translateY(-50%);
@@ -828,21 +831,6 @@
             width: 24px;
             height: 24px;
             fill: var(--text-light);
-        }
-
-        @media (max-width: 450px) {
-            .envelope { width: 300px; height: 220px; }
-            .envelope::before { border-right-width: 150px; border-top-width: 110px; border-bottom-width: 110px; }
-            .envelope::after { border-left-width: 150px; border-top-width: 110px; border-bottom-width: 110px; }
-            .front-flap { border-left-width: 150px; border-right-width: 150px; border-top-width: 120px; }
-            .wax-seal { top: 100px; }
-            .main-title { font-size: 68px; }
-            .invitation-frame { padding: 45px 20px; }
-            .names-list { font-size: 24px; }
-            .countdown-box { width: 60px; padding: 12px 8px; }
-            .countdown-number { font-size: 22px; }
-            .calendar-container { padding: 20px 10px; }
-            #music-btn { bottom: 20px; right: 20px; width: 50px; height: 50px; }
         }
     </style>
 </head>
