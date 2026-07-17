@@ -7,16 +7,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Pinyon+Script&family=Montserrat:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;1,400;1,600&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Paleta Azul Marino, Plata Tornasol y Dorado */
-            --bg-dark: #050d1a;
-            --bg-gradient: linear-gradient(135deg, #050d1a 0%, #0a192f 100%);
+            /* Paleta Océano Premium: Azul Marino, Plata Tornasol, Dorado */
+            --bg-dark: #020b16;
             --main-primary: #D4AF37; /* Dorado premium */
-            --main-secondary: #E6E8FA; /* Plata tornasol */
-            --accent-blue: #112240; 
+            --main-secondary: #E6E8FA; /* Plata tornasol base */
+            --accent-blue: #08294f; /* Azul profundo */
+            --ocean-cyan: #00f2fe; /* Destellos cian */
             --text-light: #ffffff; 
             --text-muted: #b0c4de; 
             --magic-glow: rgba(212, 175, 55, 0.4);
-            --particle-glow: rgba(230, 232, 250, 0.6);
+            --particle-glow: rgba(0, 242, 254, 0.4);
         }
 
         * {
@@ -35,33 +35,81 @@
             scroll-behavior: smooth;
         }
 
-        /* Capa de Fondo Fija - Textura sutil */
+        /* Fondo Animado Océano Profundo */
         #fixed-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: radial-gradient(circle at center, #0a192f 0%, #02060d 100%);
+            background: linear-gradient(-45deg, #01060d, #041224, #08294f, #021124);
+            background-size: 400% 400%;
             z-index: 0;
             opacity: 0;
+            animation: ocean-currents 18s ease infinite;
             transition: opacity 1.5s ease-out 0.6s;
         }
 
-        body.content-active #fixed-bg {
+        @keyframes ocean-currents {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Rayos de luz subacuáticos */
+        .light-rays {
+            position: fixed;
+            top: -10%;
+            left: 0;
+            width: 100%;
+            height: 120%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent 0%,
+                rgba(230, 232, 250, 0.03) 10%,
+                transparent 20%
+            );
+            z-index: 1;
+            opacity: 0;
+            transform: skewX(-20deg) translateX(-10%);
+            animation: sway-rays 12s infinite alternate ease-in-out;
+            pointer-events: none;
+            transition: opacity 2s ease-in;
+        }
+
+        @keyframes sway-rays {
+            0% { transform: skewX(-20deg) translateX(-10%); }
+            100% { transform: skewX(-15deg) translateX(5%); }
+        }
+
+        body.content-active #fixed-bg,
+        body.content-active .light-rays {
             opacity: 1;
         }
 
         /* Animaciones de Entrada (Scroll Reveal) */
         .reveal {
             opacity: 0;
-            transform: translateY(40px);
+            transform: translateY(50px);
             transition: all 1.2s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         .reveal.active {
             opacity: 1;
             transform: translateY(0);
+        }
+
+        /* Efecto Plata Tornasol */
+        .tornasol-text {
+            background: linear-gradient(to right, #E6E8FA, #8a9bb8, #E6E8FA, #00f2fe, #E6E8FA);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: shine 6s linear infinite;
+        }
+
+        @keyframes shine {
+            to { background-position: 200% center; }
         }
 
         /* Estilos del Sobre Animado */
@@ -71,7 +119,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: var(--bg-gradient);
+            background: linear-gradient(135deg, #020b16 0%, #08294f 100%);
             z-index: 1000;
             display: flex;
             justify-content: center;
@@ -94,18 +142,17 @@
         }
 
         .envelope-wrapper:hover {
-            transform: scale(0.95);
+            transform: scale(0.95) translateY(-5px);
         }
 
-        /* SOBRE AZUL MARINO Y DORADO */
         .envelope {
             position: relative;
             width: 340px;
             height: 240px;
-            background: #0a192f; 
+            background: #041224; 
             border-radius: 0 0 8px 8px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.9);
-            border: 1px solid rgba(212, 175, 55, 0.3);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9);
+            border: 1px solid rgba(212, 175, 55, 0.4);
         }
 
         .envelope::before {
@@ -115,9 +162,9 @@
             right: 0;
             width: 0;
             height: 0;
-            border-right: 170px solid #0d213f; 
+            border-right: 170px solid #061933; 
             border-top: 120px solid transparent;
-            border-bottom: 120px solid #0d213f;
+            border-bottom: 120px solid #061933;
             border-radius: 0 0 8px 0;
             z-index: 2;
         }
@@ -129,9 +176,9 @@
             left: 0;
             width: 0;
             height: 0;
-            border-left: 170px solid #112a4f; 
+            border-left: 170px solid #082040; 
             border-top: 120px solid transparent;
-            border-bottom: 120px solid #112a4f;
+            border-bottom: 120px solid #082040;
             border-radius: 0 0 0 8px;
             z-index: 2;
         }
@@ -144,11 +191,11 @@
             height: 0;
             border-left: 170px solid transparent;
             border-right: 170px solid transparent;
-            border-top: 130px solid #16325c; 
+            border-top: 130px solid #0a2952; 
             transform-origin: top;
             transition: transform 0.6s ease 0.2s;
             z-index: 4;
-            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5));
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.6));
         }
 
         .envelope-wrapper.open .front-flap {
@@ -161,24 +208,25 @@
             top: 110px;
             left: 50%;
             transform: translateX(-50%);
-            width: 60px;
-            height: 60px;
-            background: radial-gradient(circle, #E6E8FA 0%, #b0c4de 100%); /* Sello Plata */
+            width: 65px;
+            height: 65px;
+            background: radial-gradient(circle, #D4AF37 0%, #a6841b 100%); 
             border-radius: 50%;
             z-index: 5;
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.8), inset 0 2px 4px rgba(255,255,255,0.8);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.8), inset 0 2px 5px rgba(255,255,255,0.5);
             transition: transform 0.4s ease, opacity 0.4s ease 0.4s;
-            border: 2px solid var(--main-primary);
+            border: 2px solid #fff;
         }
 
         .wax-seal svg {
-            width: 32px;
-            height: 32px;
-            fill: #0a192f;
-            opacity: 0.9;
+            width: 35px;
+            height: 35px;
+            fill: #fff;
+            opacity: 0.95;
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5));
         }
 
         .envelope-wrapper.open .wax-seal {
@@ -188,29 +236,30 @@
 
         .envelope-text {
             position: absolute;
-            bottom: -55px;
+            bottom: -60px;
             width: 100%;
             text-align: center;
             font-family: 'Cinzel', serif;
             font-size: 16px;
             color: var(--main-primary);
-            letter-spacing: 3px;
+            letter-spacing: 4px;
             text-transform: uppercase;
-            text-shadow: 0 2px 6px rgba(0,0,0,0.9);
+            text-shadow: 0 2px 10px rgba(0,0,0,0.9);
             font-weight: bold;
         }
 
         .hint-text {
             position: absolute;
-            bottom: -85px;
+            bottom: -90px;
             width: 100%;
             text-align: center;
             font-family: 'Montserrat', sans-serif;
-            font-size: 13px;
-            color: var(--main-secondary);
-            letter-spacing: 1px;
+            font-size: 12px;
+            color: var(--ocean-cyan);
+            letter-spacing: 2px;
             opacity: 0.8;
             animation: pulse 2s infinite;
+            text-transform: uppercase;
         }
 
         /* Contenido Principal */
@@ -232,51 +281,66 @@
             transform: translateY(0);
         }
 
+        /* Marco Principal Flotante */
         .invitation-frame {
             max-width: 550px;
             width: 100%;
-            border: 1px solid rgba(212, 175, 55, 0.4);
-            padding: 55px 35px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            padding: 60px 35px;
             text-align: center;
             position: relative;
-            background: rgba(5, 13, 26, 0.85); 
-            box-shadow: 0 0 60px rgba(0, 0, 0, 0.9), inset 0 0 20px rgba(212, 175, 55, 0.05);
-            backdrop-filter: blur(15px);
+            background: rgba(3, 11, 23, 0.7); 
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), inset 0 0 30px rgba(0, 242, 254, 0.05);
+            backdrop-filter: blur(20px);
             margin-bottom: 40px;
             z-index: 3;
-            border-radius: 4px;
+            border-radius: 8px;
+            animation: gentle-float 6s ease-in-out infinite;
         }
 
-        /* Bordes esquineros elegantes */
+        @keyframes gentle-float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0); }
+        }
+
         .invitation-frame::before, .invitation-frame::after {
             content: '';
             position: absolute;
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             border: 2px solid var(--main-primary);
-            transition: all 0.5s ease;
+            opacity: 0.7;
         }
         .invitation-frame::before {
-            top: 15px; left: 15px;
+            top: 20px; left: 20px;
             border-right: none; border-bottom: none;
+            border-top-left-radius: 8px;
         }
         .invitation-frame::after {
-            bottom: 15px; right: 15px;
+            bottom: 20px; right: 20px;
             border-left: none; border-top: none;
+            border-bottom-right-radius: 8px;
         }
 
         .lotus-header { margin-bottom: 25px; }
         .lotus-header svg {
-            width: 65px;
-            height: 65px;
-            fill: var(--main-secondary);
-            filter: drop-shadow(0 0 10px rgba(230, 232, 250, 0.5));
+            width: 55px;
+            height: 55px;
+            fill: var(--main-primary);
+            filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.5));
+            animation: pulse-glow 4s infinite alternate;
+        }
+
+        @keyframes pulse-glow {
+            from { filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.3)); }
+            to { filter: drop-shadow(0 0 25px rgba(212, 175, 55, 0.8)); }
         }
 
         .section-tag {
             font-family: 'Cinzel', serif;
             font-size: 14px;
-            letter-spacing: 6px;
+            letter-spacing: 8px;
             color: var(--text-muted);
             text-transform: uppercase;
             margin-bottom: 15px;
@@ -285,30 +349,30 @@
 
         .main-title {
             font-family: 'Pinyon Script', cursive;
-            font-size: 78px; 
-            color: var(--main-primary);
+            font-size: 84px; 
             margin-bottom: 40px;
-            text-shadow: 0 2px 15px rgba(212, 175, 55, 0.3);
             line-height: 1.1;
+            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.8));
         }
 
         .phrase {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 22px; 
-            color: var(--main-secondary);
+            font-size: 23px; 
+            color: var(--text-light);
             line-height: 1.7;
             margin-bottom: 40px;
             padding: 0 15px;
-            opacity: 0.95;
             font-style: italic;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.8);
         }
 
         .divider {
-            width: 100px;
+            width: 120px;
             height: 1px;
-            background: linear-gradient(to right, transparent, var(--main-primary), transparent);
+            background: linear-gradient(to right, transparent, var(--ocean-cyan), transparent);
             margin: 45px auto;
             position: relative;
+            opacity: 0.6;
         }
         
         .divider::after {
@@ -318,40 +382,42 @@
             left: 50%;
             transform: translate(-50%, -50%);
             color: var(--main-primary);
-            font-size: 12px;
+            font-size: 14px;
             background: var(--bg-dark);
             padding: 0 10px;
+            filter: drop-shadow(0 0 5px var(--ocean-cyan));
         }
 
         .info-block { 
-            margin-bottom: 40px; 
-            padding: 20px 0;
+            margin-bottom: 45px; 
         }
 
         .info-label {
             font-family: 'Cinzel', serif;
             font-size: 13px; 
-            letter-spacing: 4px;
-            color: var(--text-muted);
+            letter-spacing: 5px;
+            color: var(--ocean-cyan);
             text-transform: uppercase;
-            margin-bottom: 15px;
-            font-weight: 600;
+            margin-bottom: 18px;
+            font-weight: 700;
         }
 
         .info-value-main {
             font-family: 'Cinzel', serif;
-            font-size: 26px; 
+            font-size: 28px; 
             font-weight: 700;
             color: var(--main-primary);
             letter-spacing: 2px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
 
         .names-list {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 26px; 
+            font-size: 28px; 
             color: var(--text-light);
-            margin: 10px 0;
+            margin: 12px 0;
             letter-spacing: 1px;
+            font-weight: 600;
         }
 
         .names-sub {
@@ -360,44 +426,37 @@
             color: var(--text-muted);
             margin-bottom: 8px;
             line-height: 1.5;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
         /* Cuenta Regresiva */
         .countdown-container {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin: 35px 0;
+            gap: 12px;
+            margin: 40px 0;
         }
 
         .countdown-box {
             display: flex;
             flex-direction: column;
             align-items: center;
-            background: rgba(17, 34, 64, 0.4);
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            border-radius: 4px;
-            padding: 15px 12px;
+            background: rgba(8, 41, 79, 0.3);
+            border: 1px solid rgba(0, 242, 254, 0.2);
+            border-radius: 6px;
+            padding: 15px 10px;
             width: 75px;
-            box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .countdown-box::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 2px;
-            background: var(--main-primary);
-            opacity: 0.5;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5), inset 0 0 15px rgba(0, 242, 254, 0.05);
+            backdrop-filter: blur(5px);
         }
 
         .countdown-number {
             font-family: 'Cinzel', serif;
-            font-size: 28px;
-            color: var(--main-secondary);
+            font-size: 26px;
+            color: var(--text-light);
             font-weight: bold;
+            text-shadow: 0 0 10px var(--ocean-cyan);
         }
 
         .countdown-label {
@@ -409,22 +468,24 @@
             font-weight: 600;
         }
 
-        /* Calendario */
+        /* Calendario Ajustado */
         .calendar-container {
-            max-width: 320px;
+            width: 100%;
+            max-width: 340px;
             margin: 0 auto 30px auto;
-            background: rgba(10, 25, 47, 0.5);
-            padding: 25px;
-            border-radius: 4px;
+            background: rgba(3, 11, 23, 0.6);
+            padding: 25px 20px;
+            border-radius: 8px;
             border: 1px solid rgba(212, 175, 55, 0.2);
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
         }
 
         .calendar-month {
             font-family: 'Cinzel', serif;
             font-size: 18px;
             color: var(--main-secondary);
-            margin-bottom: 20px;
-            letter-spacing: 3px;
+            margin-bottom: 25px;
+            letter-spacing: 4px;
             text-transform: uppercase;
             font-weight: bold;
         }
@@ -432,52 +493,57 @@
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 8px;
-            font-size: 14px; 
+            gap: 6px;
+            font-size: clamp(13px, 4vw, 15px);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
         }
 
         .calendar-day-header {
             color: var(--main-primary);
-            font-weight: bold;
-            padding-bottom: 10px;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            font-weight: 700;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(0, 242, 254, 0.2);
         }
 
         .calendar-day {
-            padding: 8px 0;
+            padding: 10px 0;
             color: var(--text-muted);
             display: flex;
             justify-content: center;
             align-items: center;
             aspect-ratio: 1;
+            transition: all 0.3s ease;
         }
 
         .calendar-day.active {
-            background-color: transparent;
-            color: var(--main-primary);
-            border: 1px solid var(--main-primary);
+            background: linear-gradient(135deg, var(--main-primary), #a6841b);
+            color: #000;
             border-radius: 50%;
             font-weight: bold;
-            box-shadow: 0 0 15px var(--magic-glow), inset 0 0 10px var(--magic-glow);
-            transform: scale(1.1);
+            box-shadow: 0 0 15px var(--magic-glow), 0 0 5px #fff;
+            transform: scale(1.15);
         }
 
-        .calendar-day.empty { color: transparent; }
+        .calendar-day.empty { 
+            color: transparent; 
+            pointer-events: none;
+        }
 
         /* Botones Generales */
         .btn-gold {
             display: inline-block;
-            background: transparent;
+            background: rgba(0, 0, 0, 0.3);
             color: var(--main-primary);
             border: 1px solid var(--main-primary);
-            padding: 14px 28px;
+            padding: 15px 30px;
             font-family: 'Cinzel', serif;
             font-size: 13px; 
             font-weight: 600;
             letter-spacing: 3px;
             text-transform: uppercase;
             text-decoration: none;
-            border-radius: 3px;
+            border-radius: 4px;
             cursor: pointer;
             transition: all 0.4s ease;
             margin-top: 20px;
@@ -485,13 +551,14 @@
             position: relative;
             overflow: hidden;
             z-index: 1;
+            backdrop-filter: blur(5px);
         }
 
         .btn-gold::before {
             content: '';
             position: absolute;
             top: 0; left: 0; width: 0%; height: 100%;
-            background: var(--main-primary);
+            background: linear-gradient(90deg, var(--main-primary), #ebd17a);
             transition: all 0.4s ease;
             z-index: -1;
         }
@@ -501,27 +568,30 @@
         }
 
         .btn-gold:hover {
-            color: #050d1a;
+            color: #020b16;
             box-shadow: 0 0 20px var(--magic-glow);
+            border-color: transparent;
+            font-weight: 700;
         }
 
         /* Mapas */
         .map-container {
             width: 100%;
-            height: 250px;
-            margin-top: 20px;
+            height: 260px;
+            margin-top: 25px;
             margin-bottom: 20px;
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            border-radius: 3px;
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            border-radius: 4px;
             overflow: hidden;
             position: relative;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.6);
         }
 
         .map-container iframe {
             width: 100%;
             height: 100%;
             border: 0;
-            filter: grayscale(80%) invert(90%) hue-rotate(180deg) contrast(120%);
+            filter: grayscale(70%) invert(95%) hue-rotate(190deg) contrast(110%);
         }
 
         /* Formularios */
@@ -536,20 +606,21 @@
 
         .form-input {
             width: 100%;
-            padding: 15px;
-            background: rgba(10, 25, 47, 0.6);
+            padding: 16px;
+            background: rgba(3, 11, 23, 0.8);
             border: 1px solid rgba(212, 175, 55, 0.3);
             color: var(--text-light);
             font-family: 'Montserrat', sans-serif;
             font-size: 14px; 
-            border-radius: 3px;
+            border-radius: 4px;
             outline: none;
-            transition: border 0.3s, box-shadow 0.3s;
+            transition: all 0.3s;
         }
 
         .form-input:focus {
-            border-color: var(--main-primary);
-            box-shadow: 0 0 10px var(--magic-glow);
+            border-color: var(--ocean-cyan);
+            box-shadow: 0 0 12px rgba(0, 242, 254, 0.2);
+            background: rgba(8, 41, 79, 0.6);
         }
 
         .form-input::placeholder {
@@ -564,27 +635,22 @@
 
         textarea.form-input {
             resize: vertical;
-            min-height: 100px;
+            min-height: 120px;
         }
 
         /* Ticket Digital Pase VIP */
         .digital-ticket {
-            background: linear-gradient(135deg, #0a192f 0%, #050d1a 100%);
-            border: 1px solid var(--main-primary);
-            border-radius: 8px;
-            padding: 35px 20px;
+            background: linear-gradient(135deg, #08294f 0%, #020b16 100%);
+            border: 1px solid var(--ocean-cyan);
+            border-radius: 10px;
+            padding: 40px 20px;
             text-align: center;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.9);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.9), inset 0 0 20px rgba(0, 242, 254, 0.1);
             margin: 0 auto;
             max-width: 320px;
             animation: fadeInTicket 0.8s ease-out forwards;
-        }
-
-        @keyframes fadeInTicket {
-            from { opacity: 0; transform: scale(0.9) translateY(-10px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
         }
 
         .digital-ticket::before, .digital-ticket::after {
@@ -592,11 +658,12 @@
             position: absolute;
             width: 40px;
             height: 40px;
-            background: #050d1a; 
+            background: #030b17; 
             border-radius: 50%;
             top: 50%;
             transform: translateY(-50%);
-            border: 1px solid var(--main-primary);
+            border: 1px solid var(--ocean-cyan);
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.9);
         }
         .digital-ticket::before {
             left: -20px;
@@ -613,26 +680,27 @@
 
         .ticket-header {
             font-family: 'Cinzel', serif;
-            font-size: 15px;
-            color: var(--main-secondary);
+            font-size: 16px;
+            color: var(--text-light);
             letter-spacing: 5px;
             text-transform: uppercase;
             margin-bottom: 25px;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            border-bottom: 1px dashed rgba(212, 175, 55, 0.4);
             padding-bottom: 15px;
-            font-weight: 600;
+            font-weight: 700;
         }
 
         .ticket-body { padding: 15px 0; }
 
         .ticket-footer {
-            font-size: 10px;
-            color: var(--text-muted);
+            font-size: 11px;
+            color: var(--ocean-cyan);
             margin-top: 25px;
-            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            border-top: 1px dashed rgba(212, 175, 55, 0.4);
             padding-top: 15px;
             letter-spacing: 2px;
             text-transform: uppercase;
+            font-weight: 500;
         }
 
         /* Burbujas Animadas (Temática Marina) */
@@ -649,20 +717,20 @@
 
         .bubble {
             position: absolute;
-            background: radial-gradient(circle at 30% 30%, rgba(230, 232, 250, 0.8), rgba(230, 232, 250, 0.1));
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), rgba(0, 242, 254, 0.2));
             border-radius: 50%;
             pointer-events: none;
-            box-shadow: 0 0 10px rgba(230, 232, 250, 0.2), inset 0 0 8px rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.4), inset 0 0 10px rgba(255, 255, 255, 0.6);
             animation: float-up infinite ease-in;
             opacity: 0;
             bottom: -50px;
         }
 
         @keyframes float-up {
-            0% { transform: translateY(0) translateX(0) scale(0.5); opacity: 0; }
-            20% { opacity: 0.7; }
-            80% { opacity: 0.5; }
-            100% { transform: translateY(-120vh) translateX(30px) scale(1.2); opacity: 0; }
+            0% { transform: translateY(0) translateX(0) scale(0.3); opacity: 0; }
+            20% { opacity: 0.8; }
+            80% { opacity: 0.6; }
+            100% { transform: translateY(-120vh) translateX(40px) scale(1.2); opacity: 0; }
         }
 
         /* Sticky Music Button */
@@ -672,15 +740,15 @@
             right: 30px;
             width: 55px;
             height: 55px;
-            background: rgba(10, 25, 47, 0.85);
-            border: 1px solid var(--main-primary);
+            background: rgba(3, 11, 23, 0.85);
+            border: 1px solid var(--ocean-cyan);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 2000;
             cursor: pointer;
-            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.3);
             backdrop-filter: blur(5px);
             transition: all 0.3s ease;
             opacity: 0;
@@ -695,34 +763,36 @@
         }
 
         #music-btn:hover {
-            background: rgba(212, 175, 55, 0.2);
+            background: rgba(0, 242, 254, 0.2);
             transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(0, 242, 254, 0.6);
         }
 
         #music-btn svg {
             width: 24px;
             height: 24px;
-            fill: var(--main-primary);
+            fill: var(--text-light);
         }
 
         @keyframes pulse {
-            0% { opacity: 0.5; }
+            0% { opacity: 0.4; }
             50% { opacity: 1; }
-            100% { opacity: 0.5; }
+            100% { opacity: 0.4; }
         }
 
         /* Responsivo */
-        @media (max-width: 400px) {
+        @media (max-width: 450px) {
             .envelope { width: 300px; height: 220px; }
             .envelope::before { border-right-width: 150px; border-top-width: 110px; border-bottom-width: 110px; }
             .envelope::after { border-left-width: 150px; border-top-width: 110px; border-bottom-width: 110px; }
             .front-flap { border-left-width: 150px; border-right-width: 150px; border-top-width: 120px; }
             .wax-seal { top: 100px; }
-            .main-title { font-size: 60px; }
+            .main-title { font-size: 68px; }
             .invitation-frame { padding: 45px 20px; }
-            .names-list { font-size: 22px; }
-            .countdown-box { width: 65px; padding: 12px 8px; }
+            .names-list { font-size: 24px; }
+            .countdown-box { width: 60px; padding: 12px 8px; }
             .countdown-number { font-size: 22px; }
+            .calendar-container { padding: 20px 10px; }
             #music-btn { bottom: 20px; right: 20px; width: 50px; height: 50px; }
         }
     </style>
@@ -730,7 +800,7 @@
 <body>
 
     <div id="fixed-bg"></div>
-
+    <div class="light-rays"></div>
     <div id="bubbles-container"></div>
 
     <audio id="bg-music" src="assets/song.mp3" loop></audio>
@@ -750,7 +820,7 @@
                 </svg>
             </div>
             <div class="envelope"></div>
-            <div class="envelope-text">Mis XV Años<br><span style="color: var(--main-secondary); font-size: 18px; letter-spacing: 5px;">Victoria</span></div>
+            <div class="envelope-text">Mis XV Años<br><span style="color: var(--main-secondary); font-size: 20px; letter-spacing: 6px; display: inline-block; margin-top: 5px;">Victoria</span></div>
             <div class="hint-text">Toca el sello para abrir</div>
         </div>
     </div>
@@ -760,15 +830,14 @@
         <div class="invitation-frame">
             
             <div class="lotus-header reveal">
-                <!-- Icono elegante, puede ser reemplazado por floritura o concha marina en SVG -->
+                <!-- Icono de Concha/Perla Premium -->
                 <svg viewBox="0 0 24 24">
-                    <path d="M12 2C8 2 4 5 4 9c0 4.5 4 7 8 13 4-6 8-8.5 8-13 0-4-4-7-8-7zm0 18c-3-4.5-6-7-6-11 0-3 2.5-5.5 6-5.5s6 2.5 6 5.5c0 4-3 6.5-6 11z"/>
-                    <path d="M12 5.5C10.5 5.5 9 7 9 9c0 2 2.5 4 3 6 .5-2 3-4 3-6 0-2-1.5-3.5-3-3.5z"/>
+                    <path d="M12 2C6.48 2 2 6.48 2 12c0 2.21.72 4.25 1.93 5.89l1.73-1.73C4.62 14.97 4 13.56 4 12c0-4.41 3.59-8 8-8s8 3.59 8 8c0 1.56-.62 2.97-1.66 4.16l1.73 1.73C21.28 16.25 22 14.21 22 12c0-5.52-4.48-10-10-10zm0 13c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm6.36 4.36l-1.41-1.41A7.95 7.95 0 0 1 12 20a7.95 7.95 0 0 1-4.95-1.71l-1.41 1.41A9.96 9.96 0 0 0 12 22a9.96 9.96 0 0 0 6.36-2.64z"/>
                 </svg>
             </div>
 
             <div class="section-tag reveal">Mis XV Años</div>
-            <h1 class="main-title reveal">Victoria</h1>
+            <h1 class="main-title tornasol-text reveal">Victoria</h1>
             
             <p class="phrase reveal">
                 "Con el corazón lleno de gratitud por el amor de la familia, tíos y amigos que me vieron nacer, crecer y soñar, celebraré la bendición de cumplír quince años. Su presencia hará de este día un recuerdo bello e inolvidable."
@@ -799,7 +868,7 @@
             </div>
 
             <div class="calendar-container reveal">
-                <div class="calendar-month">Septiembre</div>
+                <div class="calendar-month">Septiembre 2026</div>
                 <div class="calendar-grid">
                     <div class="calendar-day-header">D</div>
                     <div class="calendar-day-header">L</div>
@@ -809,8 +878,8 @@
                     <div class="calendar-day-header">V</div>
                     <div class="calendar-day-header">S</div>
                     
-                    <div class="calendar-day empty"></div>
-                    <div class="calendar-day empty"></div>
+                    <div class="calendar-day empty"></div> <!-- Dom -->
+                    <div class="calendar-day empty"></div> <!-- Lun -->
                     <div class="calendar-day">1</div>
                     <div class="calendar-day">2</div>
                     <div class="calendar-day">3</div>
@@ -854,17 +923,17 @@
                 
                 <div class="info-block reveal">
                     <div class="info-label">Con el amor de mis padres</div>
-                    <div class="names-list">William de Jesús Conkle Díaz</div>
-                    <div class="names-list">&</div>
-                    <div class="names-list">Teresita del Jesús Pacheco León</div>
+                    <div class="names-list tornasol-text">William de Jesús Conkle Díaz</div>
+                    <div class="names-list" style="color: var(--main-primary); font-size: 20px;">&</div>
+                    <div class="names-list tornasol-text">Teresita del Jesús Pacheco León</div>
                 </div>
 
-                <div class="info-block reveal" style="margin-top: 40px;">
+                <div class="info-block reveal" style="margin-top: 50px;">
                     <div class="info-label">Y mis padrinos</div>
-                    <div class="names-list">Erik Daniel May Martínez</div>
-                    <div class="names-list">Gricelda N. Carrera Navarrete</div>
-                    <div class="names-sub" style="margin: 15px 0;">Y</div>
-                    <div class="names-list">Walter Magaña Cortázar</div>
+                    <div class="names-list tornasol-text">Erik Daniel May Martínez</div>
+                    <div class="names-list tornasol-text">Gricelda N. Carrera Navarrete</div>
+                    <div class="names-sub" style="margin: 20px 0; font-size: 16px; color: var(--main-primary);">Y</div>
+                    <div class="names-list tornasol-text">Walter Magaña Cortázar</div>
                 </div>
 
                 <div class="divider reveal"></div>
@@ -872,7 +941,7 @@
                 <div class="info-block reveal">
                     <div class="info-label">Ceremonia Religiosa</div>
                     <div class="names-list">Parroquia de Santa Ana</div>
-                    <div class="names-list" style="font-size: 28px; color: var(--main-primary); margin: 20px 0; font-family: 'Cinzel', serif;">7:00 p.m.</div>
+                    <div class="names-list" style="font-size: 32px; color: var(--ocean-cyan); margin: 25px 0; font-family: 'Cinzel', serif; font-weight: 700; text-shadow: 0 0 10px rgba(0,242,254,0.3);">7:00 p.m.</div>
                     <div class="map-container">
                         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3753.0167544827996!2d-90.5261196!3d19.839244!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85f833e286732eef%3A0x599b845255cbc4d3!2sParroquia%20de%20Santa%20Ana!5e0!3m2!1ses-419!2smx!4v1784246638370!5m2!1ses-419!2smx" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
                     </div>
@@ -884,7 +953,7 @@
                 <div class="info-block reveal">
                     <div class="info-label">Recepción</div>
                     <div class="names-list">Grand Forum</div>
-                    <div class="names-list" style="font-size: 28px; color: var(--main-primary); margin: 20px 0; font-family: 'Cinzel', serif;">9:00 p.m.</div>
+                    <div class="names-list" style="font-size: 32px; color: var(--ocean-cyan); margin: 25px 0; font-family: 'Cinzel', serif; font-weight: 700; text-shadow: 0 0 10px rgba(0,242,254,0.3);">9:00 p.m.</div>
                     <div class="map-container">
                         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3752.035631058465!2d-90.4731369!3d19.8807173!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85f837143324f047%3A0xe71169338748693f!2sGrand%20Forum%2F%20Forum%20Kids!5e0!3m2!1ses-419!2smx!4v1784246686193!5m2!1ses-419!2smx" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
                     </div>
@@ -895,9 +964,9 @@
 
                 <div class="info-block reveal">
                     <div class="info-label">Código de Vestimenta</div>
-                    <div class="info-value-main" style="font-size: 32px; margin-bottom: 20px;">Formal</div>
-                    <div style="font-family: 'Montserrat', sans-serif; font-size: 15px; color: var(--text-light); padding: 0 15px; line-height: 1.6;">
-                        El color <span style="color: var(--main-secondary); font-weight: bold; text-decoration: underline;">azul marino</span> está reservado exclusivamente para la quinceañera. Agradecemos su comprensión.
+                    <div class="info-value-main" style="font-size: 36px; margin-bottom: 25px; color: var(--text-light);">Formal</div>
+                    <div style="font-family: 'Montserrat', sans-serif; font-size: 15px; color: var(--text-muted); padding: 0 15px; line-height: 1.8;">
+                        El color <span style="color: var(--ocean-cyan); font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">azul marino</span> está reservado exclusivamente para la quinceañera. Agradecemos su comprensión.
                     </div>
                 </div>
 
@@ -905,19 +974,20 @@
 
                 <div class="info-block reveal">
                     <div class="info-label">Mesa de Regalos</div>
-                    <svg viewBox="0 0 24 24" style="width: 50px; height: 50px; fill: var(--main-secondary); margin: 15px 0; filter: drop-shadow(0 0 8px var(--particle-glow));">
-                        <path d="M22 12V20C22 21.11 21.11 22 20 22H4C2.9 22 2 21.11 2 20V12H22ZM2 10V8H22V10H2ZM16 2H8C6.9 2 6 2.9 6 4V6H18V4C18 2.9 17.1 2 16 2ZM10 4V6H14V4H10Z"/>
+                    <!-- Icono Caja de Regalo Premium -->
+                    <svg viewBox="0 0 24 24" style="width: 55px; height: 55px; fill: var(--main-primary); margin: 15px 0; filter: drop-shadow(0 0 10px rgba(212,175,55,0.5));">
+                        <path d="M20 6h-2.18c.11-.31.18-.65.18-1a3 3 0 0 0-3-3c-1.08 0-2.01.59-2.5 1.48C12.01 2.59 11.08 2 10 2a3 3 0 0 0-3 3c0 .35.07.69.18 1H5c-1.11 0-2 .89-2 2v4c0 1.11.89 2 2 2h1v8c0 1.11.89 2 2 2h8c1.11 0 2-.89 2-2v-8h1c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zM10 4a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm5 2a1 1 0 1 1 0-2 1 1 0 0 1 0 2zM5 8h6v4H5V8zm2 12v-8h4v8H7zm6 0v-8h4v8h-4zm4-10h-6V8h6v2z"/>
                     </svg>
-                    <div class="info-value-main" style="font-size: 22px; margin-bottom: 15px;">Tu presencia es lo más valioso</div>
-                    <div style="font-family: 'Montserrat', sans-serif; font-size: 15px; color: var(--text-muted); padding: 0 15px; margin-bottom: 30px; line-height: 1.6;">
+                    <div class="info-value-main" style="font-size: 24px; margin-bottom: 20px;">Tu presencia es lo más valioso</div>
+                    <div style="font-family: 'Montserrat', sans-serif; font-size: 15px; color: var(--text-muted); padding: 0 15px; margin-bottom: 35px; line-height: 1.6;">
                         Si deseas tener un detalle conmigo, he preparado estas opciones que me harían muy feliz.
                     </div>
                     
                     <div style="display: flex; flex-direction: column; gap: 15px; align-items: center;">
-                        <a href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/60008105" target="_blank" class="btn-gold" style="width: 100%; max-width: 280px; margin-top: 0;">
+                        <a href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/60008105" target="_blank" class="btn-gold" style="width: 100%; max-width: 300px; margin-top: 0;">
                             Liverpool (Evento 60008105)
                         </a>
-                        <a href="https://www.amazon.com.mx/registries/gl/guest-view/2M6U7UD8ROD2M?ref_=cm_sw_r_apin_ggr-subnav-share_DZJYPJ5VZ7V4B5RREVJ5_1&language=en-US" target="_blank" class="btn-gold" style="width: 100%; max-width: 280px; margin-top: 0;">
+                        <a href="https://www.amazon.com.mx/registries/gl/guest-view/2M6U7UD8ROD2M?ref_=cm_sw_r_apin_ggr-subnav-share_DZJYPJ5VZ7V4B5RREVJ5_1&language=en-US" target="_blank" class="btn-gold" style="width: 100%; max-width: 300px; margin-top: 0;">
                             Lista en Amazon
                         </a>
                     </div>
@@ -927,11 +997,12 @@
 
                 <div class="info-block reveal">
                     <div class="info-label">Captura el Momento</div>
-                    <svg viewBox="0 0 24 24" style="width: 50px; height: 50px; fill: var(--main-secondary); margin: 15px 0; filter: drop-shadow(0 0 8px var(--particle-glow));">
-                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2zm16 2H4v1.97l8 4.66 8-4.66V6zm0 12v-8.46l-8 4.66-8-4.66V18h16z"/>
+                    <!-- Icono Cámara Elegante -->
+                    <svg viewBox="0 0 24 24" style="width: 55px; height: 55px; fill: var(--ocean-cyan); margin: 15px 0; filter: drop-shadow(0 0 10px rgba(0,242,254,0.4));">
+                        <path d="M4 4h3l2-2h6l2 2h3c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2zm8 3c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0 8c-1.65 0-3-1.35-3-3s1.35-3 3-3 3 1.35 3 3-1.35 3-3 3z"/>
                     </svg>
-                    <div class="info-value-main" style="font-size: 22px; margin-bottom: 15px;">Galería en Vivo</div>
-                    <div style="font-family: 'Montserrat', sans-serif; font-size: 15px; color: var(--text-muted); padding: 0 15px; margin-bottom: 25px; line-height: 1.6;">
+                    <div class="info-value-main" style="font-size: 24px; margin-bottom: 20px;">Galería en Vivo</div>
+                    <div style="font-family: 'Montserrat', sans-serif; font-size: 15px; color: var(--text-muted); padding: 0 15px; margin-bottom: 30px; line-height: 1.6;">
                         Ayúdanos a conservar los mejores recuerdos. Sube las fotos y videos que tomes durante el evento a nuestra carpeta compartida.
                     </div>
                     <a href="https://drive.google.com/drive/folders/1sT6y9D-YoamGh-HCwIZmEbkFZxRj9Kng?usp=sharing" target="_blank" class="btn-gold" style="width: auto;">
@@ -956,7 +1027,7 @@
                             <div class="ticket-body">
                                 <div style="font-family: 'Cinzel', serif; font-size: 20px; color: var(--main-primary); margin-bottom: 20px; font-weight: bold; letter-spacing: 2px;">INVITADO ESPECIAL</div>
                                 <div style="font-family: 'Montserrat', sans-serif; font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 3px; margin-bottom: 15px;">Pases Asignados</div>
-                                <div id="ticket-count" style="font-family: 'Cinzel', serif; font-weight: 700; font-size: 50px; color: var(--main-secondary); line-height: 1; text-shadow: 0 0 20px rgba(230,232,250,0.5);">0</div>
+                                <div id="ticket-count" class="tornasol-text" style="font-family: 'Cinzel', serif; font-weight: 700; font-size: 55px; line-height: 1; filter: drop-shadow(0 0 15px rgba(0,242,254,0.3));">0</div>
                             </div>
                             
                             <div class="ticket-footer">
@@ -982,7 +1053,7 @@
                         
                         <input type="number" id="rsvp-guests" class="form-input" placeholder="¿Cuántas personas asistirán?" min="1" style="display: none;">
                         
-                        <button onclick="sendRSVP()" class="btn-gold" style="font-size: 14px; padding: 16px;">Confirmar por WhatsApp</button>
+                        <button onclick="sendRSVP()" class="btn-gold" style="font-size: 14px; padding: 18px;">Confirmar por WhatsApp</button>
                     </div>
                 </div>
 
@@ -994,7 +1065,7 @@
                     <div class="form-container">
                         <input type="text" id="wish-name" class="form-input" placeholder="Tu Nombre">
                         <textarea id="wish-message" class="form-input" placeholder="Escribe tus buenos deseos para Victoria..."></textarea>
-                        <button onclick="sendWish()" class="btn-gold" style="font-size: 14px; padding: 16px;">Enviar Mensaje</button>
+                        <button onclick="sendWish()" class="btn-gold" style="font-size: 14px; padding: 18px;">Enviar Mensaje</button>
                     </div>
                 </div>
 
@@ -1002,7 +1073,7 @@
 
             <div class="divider reveal"></div>
             
-            <div class="reveal" style="font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 4px; color: var(--text-muted); margin-top: 35px; font-weight: 600; text-transform: uppercase;">
+            <div class="reveal" style="font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 6px; color: var(--text-muted); margin-top: 40px; font-weight: 700; text-transform: uppercase;">
                 INVYTIA PREMIUM
             </div>
         </div>
@@ -1087,19 +1158,19 @@
             }, 1200);
         }
 
-        // Sistema de Burbujas Marinas
+        // Sistema de Burbujas Marinas Elegantes
         function createBubbles() {
             const container = document.getElementById('bubbles-container');
-            const count = 40; 
+            const count = 50; 
             
             for (let i = 0; i < count; i++) {
                 const bubble = document.createElement('div');
                 bubble.classList.add('bubble');
                 
-                const size = Math.random() * 8 + 3; // Burbujas de 3px a 11px
+                const size = Math.random() * 12 + 4; // Burbujas entre 4px y 16px
                 const left = Math.random() * 100;
-                const animDuration = Math.random() * 10 + 8; // Lento y elegante
-                const animDelay = Math.random() * 8;
+                const animDuration = Math.random() * 12 + 10; // Subida muy lenta y elegante
+                const animDelay = Math.random() * 10;
                 
                 bubble.style.width = `${size}px`;
                 bubble.style.height = `${size}px`;
